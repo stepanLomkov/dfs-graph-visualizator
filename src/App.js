@@ -1,8 +1,10 @@
+import { Sidebar } from "./Entities/Sidebar";
+
 function App() {
   return (
-    <div>
-      ...
-    </div>
+    <>
+      <Sidebar />
+    </>
   );
 }
 
