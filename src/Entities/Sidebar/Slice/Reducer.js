@@ -1,12 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { testSidebarAction } from "./Actions"
+import { activateEditGraphStatusSidebarAction } from "./Actions"
 
 const INITIAL_SLICE_STATE = {
-    data: 'init',
+    editGraphStatus: null,
 }
 
 export const sidebarReducer = createReducer(INITIAL_SLICE_STATE, (builder) => {
-    builder.addCase(testSidebarAction, (reducerState, action) => {
-        reducerState.data = action.payload;
+    builder.addCase(activateEditGraphStatusSidebarAction, (reducerState, action) => {
+        reducerState.editGraphStatus = action.payload;
     })
 })

@@ -1,0 +1,6 @@
+.actionHint {
+    position: fixed;
+    top: 10px;
+    right: 50px;
+    border: solid 5px #000;
+}

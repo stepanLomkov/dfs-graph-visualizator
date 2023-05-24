@@ -1,0 +1,5 @@
+.workspaceContainer {
+    flex-grow: 9;
+    height: 100vh;
+    border-left: 5px solid #000;
+}

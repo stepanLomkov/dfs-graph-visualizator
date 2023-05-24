@@ -1,20 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { sidebarSelector } from "./Slice/Selectors";
-import { testSidebarAction } from "./Slice/Actions";
+import './index.css';
+import { AddNodeButtom } from "./Components/AddNodeButtom";
+import { DelNodeButtom } from "./Components/DelNodeButtom";
 
 export function Sidebar () {
-    const dispatch = useDispatch();
-    const data = useSelector(sidebarSelector);
-
-    const handleClick = () => {
-        dispatch(testSidebarAction('newValue'));
-    }
-
     return (
-        <>
-            Sidebar
-            data: {data}
-            <div onClick={ handleClick }>test btm</div>
-        </>
+        <div className='sidebarContainer'>
+            <AddNodeButtom />
+            <DelNodeButtom />
+        </div>
     );
 }

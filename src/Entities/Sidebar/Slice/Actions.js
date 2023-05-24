@@ -2,4 +2,4 @@ import { createAction } from "@reduxjs/toolkit";
 
 const ACTION_NAMESPACE = 'SIDEBAR';
 
-export const testSidebarAction = createAction(`${ACTION_NAMESPACE}_TEST`);
+export const activateEditGraphStatusSidebarAction = createAction(`${ACTION_NAMESPACE}_ACTIVATE_STATUS`);
