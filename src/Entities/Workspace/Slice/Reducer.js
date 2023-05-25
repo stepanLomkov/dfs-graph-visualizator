@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { addNodeWorkspaceAction, delNodeWorkspaceAction } from "./Actions";
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction } from "./Actions";
 
 let UNID = 1;
 
@@ -16,6 +16,7 @@ const INITIAL_SLICE_STATE = {
             //}
         //}
     ],
+    arcAddingId: null,
 }
 
 export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => {
@@ -36,5 +37,46 @@ export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => 
         })
         .addCase(delNodeWorkspaceAction, (reducerState, action) => {
             reducerState.nodes.splice(reducerState.nodes.findIndex(node => node.data.id === +action.payload), 1);
+        })
+        .addCase(delNodeInChildrenWorkspaceAction, (reducerState, action) => {
+            reducerState.nodes.map(node => {
+                if (node.data.children.includes(action.payload)) {
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            children: node.data.children.splice(node.data.children.findIndex(child => child === action.payload), 1),
+                        },
+                    }
+                }
+                
+                return node;
+            });
+        })
+        .addCase(selectFirstNodeForAddingArcWorkspaceAction, (reducerState, action) => {
+            reducerState.arcAddingId = action.payload;
+        })
+        .addCase(selectSecondNodeForAddingArcWorkspaceAction, (reducerState, action) => {
+            reducerState.nodes = [
+                ...reducerState.nodes.map(node => {
+                    if (node.data.id === +reducerState.arcAddingId && node.data.id !== +action.payload) {
+                        return {
+                            ...node,
+                            data: {
+                                ...node.data,
+                                children: [ ...new Set([
+                                    ...node.data.children,
+                                    action.payload,
+                                ]) ],
+                            }
+                        }
+                    }
+
+                    return node;
+                }),
+            ]
+        })
+        .addCase(resetArcAddingIdWorkspaceAction, (reducerState) => {
+            reducerState.arcAddingId = null;
         })
 })
