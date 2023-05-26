@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionHint } from './Components/ActionHint';
 import './index.css';
-import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction } from './Slice/Actions';
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from './Slice/Actions';
 import { editGraphStatusSidebarSelector } from '../Sidebar/Slice/Selectors';
 import { EDIT_GRAPH_STATUSES } from '../../Common/Consts';
 import { activateEditGraphStatusSidebarAction } from '../Sidebar/Slice/Actions';
-import { arcAddingIdWorkspaceSelector, nodesWorkspaceSelector } from './Slice/Selectors';
+import { arcAddingIdWorkspaceSelector, nodesWorkspaceSelector, startNodeWorkspaceSelector } from './Slice/Selectors';
 import { useEffect, useRef } from 'react';
 
 export function Workspace () {
@@ -13,6 +13,7 @@ export function Workspace () {
     const editGraphStatus = useSelector(editGraphStatusSidebarSelector);
     const nodes = useSelector(nodesWorkspaceSelector);
     const arcAddigId = useSelector(arcAddingIdWorkspaceSelector);
+    const startNodeId = useSelector(startNodeWorkspaceSelector);
     const workspaceRef = useRef();
 
     useEffect(() => {
@@ -37,20 +38,27 @@ export function Workspace () {
 
     const handleNodeClick = (e) => {
         e.preventDefault();
+        const nodeId = e.target.id;
 
         if (editGraphStatus === EDIT_GRAPH_STATUSES.DEL_NODE) {
-            dispatch(delNodeWorkspaceAction(e.target.id));
-            dispatch(delNodeInChildrenWorkspaceAction(e.target.id))
+            dispatch(delNodeWorkspaceAction(nodeId));
+            dispatch(delNodeInChildrenWorkspaceAction(nodeId));
+            nodeId === startNodeId && dispatch(resetStartNodeWorkspaceAction());
             dispatch(activateEditGraphStatusSidebarAction(null));
         }
 
         if (editGraphStatus === EDIT_GRAPH_STATUSES.ADD_ARC) {
             if (!arcAddigId) {
-                dispatch(selectFirstNodeForAddingArcWorkspaceAction(e.target.id));
+                dispatch(selectFirstNodeForAddingArcWorkspaceAction(nodeId));
             } else {
-                dispatch(selectSecondNodeForAddingArcWorkspaceAction(e.target.id));
+                dispatch(selectSecondNodeForAddingArcWorkspaceAction(nodeId));
                 dispatch(activateEditGraphStatusSidebarAction(null));
             }
+        }
+
+        if (editGraphStatus === EDIT_GRAPH_STATUSES.SELECT_START_NODE) {
+            dispatch(selectStartNodeWorkspaceAction(nodeId));
+            dispatch(activateEditGraphStatusSidebarAction(null));
         }
     }
 
@@ -68,7 +76,16 @@ export function Workspace () {
                         id={ data.id }
                         key={ data.id }
                         onClick={ handleNodeClick }
-                        style={{ position: 'fixed', top: position.y, left: position.x, borderRadius: '50%', border: 'solid 2px #000', height: '30px', width: '30px' }}
+                        style={{
+                            position: 'fixed',
+                            top: position.y, 
+                            left: position.x,
+                            borderRadius: '50%',
+                            border: 'solid 2px #000',
+                            height: '30px',
+                            width: '30px',
+                            background: data.id === +startNodeId ? 'blue' : 'white',
+                        }}
                     >
                         {data.id}
                     </div>

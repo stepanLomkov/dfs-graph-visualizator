@@ -5,3 +5,7 @@ export function nodesWorkspaceSelector ({ workspace }) {
 export function arcAddingIdWorkspaceSelector ({ workspace }) {
     return workspace.arcAddingId;
 }
+
+export function startNodeWorkspaceSelector ({ workspace }) {
+    return workspace.startNode;
+}

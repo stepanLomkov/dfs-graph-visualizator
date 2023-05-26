@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction } from "./Actions";
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from "./Actions";
 
 let UNID = 1;
 
@@ -17,6 +17,7 @@ const INITIAL_SLICE_STATE = {
         //}
     ],
     arcAddingId: null,
+    startNode: null,
 }
 
 export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => {
@@ -78,5 +79,11 @@ export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => 
         })
         .addCase(resetArcAddingIdWorkspaceAction, (reducerState) => {
             reducerState.arcAddingId = null;
+        })
+        .addCase(selectStartNodeWorkspaceAction, (reducerState, action) => {
+            reducerState.startNode = action.payload;
+        })
+        .addCase(resetStartNodeWorkspaceAction, (reducerState) => {
+            reducerState.startNode = null;
         })
 })
