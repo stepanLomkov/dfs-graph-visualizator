@@ -10,3 +10,5 @@ export const selectSecondNodeForAddingArcWorkspaceAction = createAction(`${ACTIO
 export const resetArcAddingIdWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_ARC_ADDING_ID`);
 export const selectStartNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SELECT_START_NODE`);
 export const resetStartNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_START_NODE`);
+export const selectSearchedNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SELECT_SEARCHED_NODE`);
+export const resetSearchedNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_SEARCHED_NODE`);

@@ -9,3 +9,7 @@ export function arcAddingIdWorkspaceSelector ({ workspace }) {
 export function startNodeWorkspaceSelector ({ workspace }) {
     return workspace.startNode;
 }
+
+export function searchedNodeWorkspaceSelector ({ workspace }) {
+    return workspace.searchedNode;
+}

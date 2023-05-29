@@ -6,4 +6,5 @@ export const ACTION_HINTS = Object.freeze({
    [`${EDIT_GRAPH_STATUSES.ADD_ARC}_FIRST`]: 'Выберите первый узел дуги',
    [`${EDIT_GRAPH_STATUSES.ADD_ARC}_SECOND`]: 'Выберите второй узел дуги',
    [EDIT_GRAPH_STATUSES.SELECT_START_NODE]: 'Выберите начальный узел',
+   [EDIT_GRAPH_STATUSES.SELECT_SEARCHED_NODE]: 'Выберите узел, который необходимо найти'
 });

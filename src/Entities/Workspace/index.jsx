@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionHint } from './Components/ActionHint';
 import './index.css';
-import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from './Slice/Actions';
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetSearchedNodeWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSearchedNodeWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from './Slice/Actions';
 import { editGraphStatusSidebarSelector } from '../Sidebar/Slice/Selectors';
 import { EDIT_GRAPH_STATUSES } from '../../Common/Consts';
 import { activateEditGraphStatusSidebarAction } from '../Sidebar/Slice/Actions';
-import { arcAddingIdWorkspaceSelector, nodesWorkspaceSelector, startNodeWorkspaceSelector } from './Slice/Selectors';
+import { arcAddingIdWorkspaceSelector, nodesWorkspaceSelector, searchedNodeWorkspaceSelector, startNodeWorkspaceSelector } from './Slice/Selectors';
 import { useEffect, useRef } from 'react';
 
 export function Workspace () {
@@ -14,6 +14,7 @@ export function Workspace () {
     const nodes = useSelector(nodesWorkspaceSelector);
     const arcAddigId = useSelector(arcAddingIdWorkspaceSelector);
     const startNodeId = useSelector(startNodeWorkspaceSelector);
+    const searchedNodeId = useSelector(searchedNodeWorkspaceSelector);
     const workspaceRef = useRef();
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export function Workspace () {
             dispatch(delNodeWorkspaceAction(nodeId));
             dispatch(delNodeInChildrenWorkspaceAction(nodeId));
             nodeId === startNodeId && dispatch(resetStartNodeWorkspaceAction());
+            nodeId === searchedNodeId && dispatch(resetSearchedNodeWorkspaceAction());
             dispatch(activateEditGraphStatusSidebarAction(null));
         }
 
@@ -58,6 +60,11 @@ export function Workspace () {
 
         if (editGraphStatus === EDIT_GRAPH_STATUSES.SELECT_START_NODE) {
             dispatch(selectStartNodeWorkspaceAction(nodeId));
+            dispatch(activateEditGraphStatusSidebarAction(null));
+        }
+
+        if (editGraphStatus === EDIT_GRAPH_STATUSES.SELECT_SEARCHED_NODE) {
+            dispatch(selectSearchedNodeWorkspaceAction(nodeId));
             dispatch(activateEditGraphStatusSidebarAction(null));
         }
     }
@@ -85,6 +92,7 @@ export function Workspace () {
                             height: '30px',
                             width: '30px',
                             background: data.id === +startNodeId ? 'blue' : 'white',
+                            borderColor: data.id === +searchedNodeId ? 'green' : 'black',
                         }}
                     >
                         {data.id}

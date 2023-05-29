@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from "./Actions";
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetSearchedNodeWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSearchedNodeWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from "./Actions";
 
 let UNID = 1;
 
@@ -18,6 +18,7 @@ const INITIAL_SLICE_STATE = {
     ],
     arcAddingId: null,
     startNode: null,
+    searchedNode: null,
 }
 
 export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => {
@@ -85,5 +86,11 @@ export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => 
         })
         .addCase(resetStartNodeWorkspaceAction, (reducerState) => {
             reducerState.startNode = null;
+        })
+        .addCase(selectSearchedNodeWorkspaceAction, (reducerState, action) => {
+            reducerState.searchedNode = action.payload;
+        })
+        .addCase(resetSearchedNodeWorkspaceAction, (reducerState) => {
+            reducerState.searchedNode = null;
         })
 })
