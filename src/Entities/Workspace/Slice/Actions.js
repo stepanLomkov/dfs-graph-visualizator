@@ -12,3 +12,9 @@ export const selectStartNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_
 export const resetStartNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_START_NODE`);
 export const selectSearchedNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SELECT_SEARCHED_NODE`);
 export const resetSearchedNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_SEARCHED_NODE`);
+
+export const selectVisitedNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SELECT_VISITED_NODE`);
+export const selectCurrentNodeWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SELECT_CURRENT_NODE`);
+export const setIsShowRunningWorkspaceAction = createAction(`${ACTION_NAMESPACE}_SET_IS_SHOW_RUNNING`);
+export const resetShowRunningWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_SHOW_RUNNING`);
+export const resetAllWorkspaceAction = createAction(`${ACTION_NAMESPACE}_RESET_ALL`);

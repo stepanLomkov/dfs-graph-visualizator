@@ -5,8 +5,9 @@ import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorksp
 import { editGraphStatusSidebarSelector } from '../Sidebar/Slice/Selectors';
 import { EDIT_GRAPH_STATUSES } from '../../Common/Consts';
 import { activateEditGraphStatusSidebarAction } from '../Sidebar/Slice/Actions';
-import { arcAddingIdWorkspaceSelector, nodesWorkspaceSelector, searchedNodeWorkspaceSelector, startNodeWorkspaceSelector } from './Slice/Selectors';
+import { arcAddingIdWorkspaceSelector, currentNodeWorkspaceSelector, nodesWorkspaceSelector, searchedNodeWorkspaceSelector, startNodeWorkspaceSelector } from './Slice/Selectors';
 import { useEffect, useRef } from 'react';
+import { getBackground, getBorderColor } from './Utils';
 
 export function Workspace () {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export function Workspace () {
     const arcAddigId = useSelector(arcAddingIdWorkspaceSelector);
     const startNodeId = useSelector(startNodeWorkspaceSelector);
     const searchedNodeId = useSelector(searchedNodeWorkspaceSelector);
+    const currentNodeId = useSelector(currentNodeWorkspaceSelector);
     const workspaceRef = useRef();
 
     useEffect(() => {
@@ -77,7 +79,7 @@ export function Workspace () {
         >
             <ActionHint />
 
-            {nodes.length > 0 ? nodes.map(({data, position}) => {
+            {nodes.length > 0 ? nodes.map(({ data, position, wasVisited }) => {
                 return (
                     <div
                         id={ data.id }
@@ -91,8 +93,8 @@ export function Workspace () {
                             border: 'solid 2px #000',
                             height: '30px',
                             width: '30px',
-                            background: data.id === +startNodeId ? 'blue' : 'white',
-                            borderColor: data.id === +searchedNodeId ? 'green' : 'black',
+                            background: getBackground(data.id, +startNodeId, wasVisited, (data.id === +searchedNodeId) && (data.id === +currentNodeId)),
+                            borderColor: getBorderColor(data.id, +currentNodeId, +searchedNodeId),
                         }}
                     >
                         {data.id}

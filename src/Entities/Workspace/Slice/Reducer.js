@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetArcAddingIdWorkspaceAction, resetSearchedNodeWorkspaceAction, resetStartNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSearchedNodeWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction } from "./Actions";
+import { addNodeWorkspaceAction, delNodeInChildrenWorkspaceAction, delNodeWorkspaceAction, resetAllWorkspaceAction, resetArcAddingIdWorkspaceAction, resetSearchedNodeWorkspaceAction, resetShowRunningWorkspaceAction, resetStartNodeWorkspaceAction, selectCurrentNodeWorkspaceAction, selectFirstNodeForAddingArcWorkspaceAction, selectSearchedNodeWorkspaceAction, selectSecondNodeForAddingArcWorkspaceAction, selectStartNodeWorkspaceAction, selectVisitedNodeWorkspaceAction, setIsShowRunningWorkspaceAction } from "./Actions";
 
 let UNID = 1;
 
@@ -14,11 +14,14 @@ const INITIAL_SLICE_STATE = {
                 // x:
                 // y:
             //}
+            // wasVisited:
         //}
     ],
     arcAddingId: null,
     startNode: null,
     searchedNode: null,
+    currentNode: null,
+    isShowRunning: false,
 }
 
 export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => {
@@ -92,5 +95,48 @@ export const workspaceReducer = createReducer(INITIAL_SLICE_STATE, (builder) => 
         })
         .addCase(resetSearchedNodeWorkspaceAction, (reducerState) => {
             reducerState.searchedNode = null;
+        })
+
+        .addCase(selectVisitedNodeWorkspaceAction, (reducerState, action) => {
+            reducerState.nodes = [
+                ...reducerState.nodes.map(node => {
+                    if (node.data.id === +action.payload) {
+                        return {
+                            ...node,
+                            wasVisited: true,
+                        }
+                    }
+
+                    return node;
+                }),
+            ];
+        })
+        .addCase(selectCurrentNodeWorkspaceAction, (reducerState, action) => {
+            reducerState.currentNode = action.payload;
+        })
+        .addCase(setIsShowRunningWorkspaceAction, (reducerState, action) => {
+            reducerState.isShowRunning = action.payload;
+        })
+        .addCase(resetShowRunningWorkspaceAction, (reducerState) => {
+            return {
+                ...reducerState,
+                currentNode: null,
+                nodes: [
+                    ...reducerState.nodes.map(node => {
+                        if (node.wasVisited) {
+                            return {
+                                ...node,
+                                wasVisited: false,
+                            }
+                        }
+
+                        return node;
+                    }),
+                ]
+            }
+        })
+        .addCase(resetAllWorkspaceAction, () => {
+            UNID = 1;
+            return INITIAL_SLICE_STATE;
         })
 })

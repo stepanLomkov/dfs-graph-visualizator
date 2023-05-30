@@ -13,3 +13,11 @@ export function startNodeWorkspaceSelector ({ workspace }) {
 export function searchedNodeWorkspaceSelector ({ workspace }) {
     return workspace.searchedNode;
 }
+
+export function currentNodeWorkspaceSelector ({ workspace }) {
+    return workspace.currentNode;
+}
+
+export function isShowRunningWorkspaceSelector ({ workspace }) {
+    return workspace.isShowRunning;
+}
