@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { resetShowRunningWorkspaceAction } from "../../../Workspace/Slice/Actions";
 
-export function ResetShowButtom () {
+export function ResetShowButton () {
     const dispatch = useDispatch();
 
     const handleClick = () => {
@@ -9,6 +9,6 @@ export function ResetShowButtom () {
     }
 
     return (
-        <div onClick={ handleClick }>Сбросить показ</div>
+        <button onClick={ handleClick }>Сбросить показ</button>
     );
 }

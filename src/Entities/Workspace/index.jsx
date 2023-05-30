@@ -93,6 +93,8 @@ export function Workspace () {
                             border: 'solid 2px #000',
                             height: '30px',
                             width: '30px',
+                            textAlign: 'center',
+                            fontWeight: 'bold',
                             background: getBackground(data.id, +startNodeId, wasVisited, (data.id === +searchedNodeId) && (data.id === +currentNodeId)),
                             borderColor: getBorderColor(data.id, +currentNodeId, +searchedNodeId),
                         }}

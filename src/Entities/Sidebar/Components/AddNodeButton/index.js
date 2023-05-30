@@ -3,9 +3,9 @@ import { activateEditGraphStatusSidebarAction } from "../../Slice/Actions";
 import { EDIT_GRAPH_STATUSES } from "../../../../Common/Consts";
 import { editGraphStatusSidebarSelector } from "../../Slice/Selectors";
 
-const currentEditGraphStatus = EDIT_GRAPH_STATUSES.ADD_ARC;
+const currentEditGraphStatus = EDIT_GRAPH_STATUSES.ADD_NODE;
 
-export function AddArcButtom () {
+export function AddNodeButton () {
     const dispatch = useDispatch();
     const editGraphStatus = useSelector(editGraphStatusSidebarSelector);
 
@@ -14,6 +14,6 @@ export function AddArcButtom () {
     }
 
     return (
-        <div onClick={ handleClick }>Добавить дугу</div>
+        <button onClick={ handleClick }>Добавить узел</button>
     );
 }

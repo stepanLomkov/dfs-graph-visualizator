@@ -5,7 +5,7 @@ import { editGraphStatusSidebarSelector } from "../../Slice/Selectors";
 
 const currentEditGraphStatus = EDIT_GRAPH_STATUSES.DEL_NODE;
 
-export function DelNodeButtom () {
+export function DelNodeButton () {
     const dispatch = useDispatch();
     const editGraphStatus = useSelector(editGraphStatusSidebarSelector);
 
@@ -14,6 +14,6 @@ export function DelNodeButtom () {
     }
 
     return (
-        <div onClick={ handleClick }>Удалить узел</div>
+        <button onClick={ handleClick }>Удалить узел</button>
     );
 }

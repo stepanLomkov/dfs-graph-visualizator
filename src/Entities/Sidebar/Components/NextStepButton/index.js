@@ -1,9 +1,9 @@
 import { useDFS } from "../../Hooks";
 
-export function NextStepButtom () {
+export function NextStepButton () {
     const [ nextStep ] = useDFS();
 
     return (
-        <div onClick={ nextStep }>Вперед</div>
+        <button onClick={ nextStep }>Вперед</button>
     );
 }

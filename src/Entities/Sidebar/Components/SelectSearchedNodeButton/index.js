@@ -3,9 +3,9 @@ import { activateEditGraphStatusSidebarAction } from "../../Slice/Actions";
 import { EDIT_GRAPH_STATUSES } from "../../../../Common/Consts";
 import { editGraphStatusSidebarSelector } from "../../Slice/Selectors";
 
-const currentEditGraphStatus = EDIT_GRAPH_STATUSES.SELECT_START_NODE;
+const currentEditGraphStatus = EDIT_GRAPH_STATUSES.SELECT_SEARCHED_NODE;
 
-export function SelectStartNodeButtom () {
+export function SelectSearchedNodeButton () {
     const dispatch = useDispatch();
     const editGraphStatus = useSelector(editGraphStatusSidebarSelector);
 
@@ -14,6 +14,6 @@ export function SelectStartNodeButtom () {
     }
 
     return (
-        <div onClick={ handleClick }>Выбрать начальный узел</div>
+        <button onClick={ handleClick }>Выбрать искомый узел</button>
     );
 }
